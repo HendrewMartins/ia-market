@@ -58,13 +58,13 @@ public class IAGeneratorService {
             // 2️⃣ Usa Criteria para carregar modelo Hugging Face (ex: GPT2)
             Criteria<String, String> criteria = Criteria.builder()
                     .setTypes(String.class, String.class)
-                    .optModelUrls("djl://ai.djl.huggingface/gpt2") // agora funciona
+                    .optModelUrls("djl://ai.djl.huggingface/gpt2")
                     .optTranslator(translator)
                     .build();
 
             try (ZooModel<String, String> model = ModelZoo.loadModel(criteria);
                  Predictor<String, String> predictor = model.newPredictor()) {
-                String output = predictor.predict("Olá DJL, como vai?");
+                String output = predictor.predict(prompt);
                 System.out.println(output);
             }
 
