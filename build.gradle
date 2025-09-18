@@ -55,17 +55,14 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 
 	// API DJL
-	implementation 'ai.djl:api:0.21.0'
+	implementation 'ai.djl:api:0.34.0'
 
 	// Hugging Face integration
-	implementation 'ai.djl.huggingface:tokenizers:0.21.0'
-	//implementation 'ai.djl.huggingface:hub:0.21.0'
+	implementation 'ai.djl.huggingface:tokenizers:0.34.0'
 
-//	// PyTorch engine (CPU ou GPU)
-//	implementation 'ai.djl.pytorch:pytorch-engine:0.21.0'
-//	implementation 'ai.djl.pytorch:pytorch-native-auto:2.1.0'
+	implementation 'ai.djl.pytorch:pytorch-engine:0.34.0'
+	implementation 'ai.djl.pytorch:pytorch-native-cpu:2.7.1'
 
-	// Jackson para JSON
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
 
