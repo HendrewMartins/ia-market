@@ -58,7 +58,7 @@ public class ProductController {
 
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute AdjustedProduct product) {
-        sandboxClient.patchProductSKU(349464315, product.getId(), new ProductSKURequest(product));
+        sandboxClient.patchProductSKU(349464315, 108559459, new ProductSKURequest(product));
         return "redirect:/";
     }
 }

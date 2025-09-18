@@ -32,6 +32,7 @@ public class IAGeneratorService {
                 "Produto: " + JsonUtils.toJson(product) + "\n" +
                 "Categoria: " + JsonUtils.toJson(categories) + "\n" +
                 "Atributos: " + JsonUtils.toJson(attributes) + "\n" +
+                "reduza o título para 60 caracteres. \n" +
                 "Retorne apenas o JSON do produto ajustado.";
 
         try {
