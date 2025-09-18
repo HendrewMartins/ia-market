@@ -7,3 +7,7 @@ anymarket:
   base-url: https://app.anymarket.com.br
   token: 259029268L22449504E1790198813829C169688681382900O1.I
 
+sandbox:
+    base-url: https://api.anymarket.com.br
+    token: MjI0NDk1MDQu.DLgBmWACSIJ+ZnLnVrtWXkOPdgGnRKay8HfDKv/3sMulNsFPft176plbOttnqpeie/Ry+2n+nsXdeq3TidP4qA==
+
