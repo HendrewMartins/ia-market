@@ -9,6 +9,8 @@ import br.dgs.hanckathon.ia_market.product.model.AdjustedProduct;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service
 public class IAGeneratorService {
 
@@ -21,7 +23,7 @@ public class IAGeneratorService {
     }
 
     public AdjustedProduct adjustProduct(AdjustedProduct product,
-                                         CategoryResponse category,
+                                         List<CategoryResponse> category,
                                          CategoryAttributesResponse attributes) {
 
         // 1️⃣ Montar prompt

@@ -17,7 +17,8 @@ public class AnymarketAuthFilter implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        request.getHeaders().add("Authorization", "Bearer " + token);
+
+        request.getHeaders().add("gumgaToken", token);
         return execution.execute(request, body);
     }
 }

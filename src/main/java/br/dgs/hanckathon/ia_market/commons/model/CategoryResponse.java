@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CategoryResponse {
-    private Long id;
+    private String codeInMarketPlace;
     private String name;
-    private String parentCategoryId;
+    private String completePath;
 }
