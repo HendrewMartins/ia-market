@@ -9,5 +9,5 @@ anymarket:
 
 huggingface:
   model-url: https://api-inference.huggingface.co/models/Salesforce/codegen-6B-mono
-  token: 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
+  token: ${HUGGINGFACE_API_KEY}
 

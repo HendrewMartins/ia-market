@@ -1,9 +1,10 @@
 package br.dgs.hanckathon.ia_market.externals.huggingface;
 
-import ai.djl.Model;
-import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer;
+import ai.djl.ModelException;
 import ai.djl.inference.Predictor;
 import ai.djl.ndarray.NDList;
+import ai.djl.repository.zoo.Criteria;
+import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.translate.Batchifier;
 import ai.djl.translate.TranslateException;
 import ai.djl.translate.Translator;
@@ -15,6 +16,7 @@ import br.dgs.hanckathon.ia_market.product.model.AdjustedProduct;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -25,7 +27,7 @@ public class IAGeneratorService {
     public AdjustedProduct adjustProduct(AdjustedProduct product,
                                          List<CategoryResponse> category,
                                          List<CategoryAttributesResponse> attributes) {
-        // 1️⃣ Montar prompt
+
         String prompt = "Ajuste este produto para o marketplace " + product.getMarketPlace() +
                 " com base nas categorias e atributos.\n" +
                 "Produto: " + JsonUtils.toJson(product) + "\n" +
@@ -34,43 +36,38 @@ public class IAGeneratorService {
                 "Retorne apenas o JSON do produto ajustado.";
 
         try {
-            // 2️⃣ Carregar o modelo do Hugging Face Hub via DJL
-            try (Model model = Model.newInstance("Salesforce/codegen-6B-mono")) {
-
-                // 3️⃣ Criar translator simples
-                Translator<String, String> translator = new Translator<>() {
-                    HuggingFaceTokenizer tokenizer = HuggingFaceTokenizer.newInstance("Salesforce/codegen-6B-mono");
-
-                    @Override
-                    public NDList processInput(TranslatorContext ctx, String input) {
-                        long[] tokenIds = tokenizer.encode(input).getIds();
-                        return new NDList(ctx.getNDManager().create(tokenIds));
-                    }
-
-                    @Override
-                    public String processOutput(TranslatorContext ctx, NDList list) {
-                        long[] outputIds = list.singletonOrThrow().toLongArray();
-                        return tokenizer.decode(outputIds);
-                    }
-
-                    @Override
-                    public Batchifier getBatchifier() {
-                        return null;
-                    }
-                };
-
-                // 4️⃣ Criar predictor
-                try (Predictor<String, String> predictor = model.newPredictor(translator)) {
-                    String generatedText = predictor.predict(prompt);
-
-                    // 5️⃣ Desserializar para AdjustedProduct
-                    return objectMapper.readValue(generatedText, AdjustedProduct.class);
+            // 1️⃣ Define translator simples (String -> String)
+            Translator<String, String> translator = new Translator<>() {
+                @Override
+                public NDList processInput(TranslatorContext ctx, String input) {
+                    return new NDList(ctx.getNDManager().create(input));
                 }
+
+                @Override
+                public String processOutput(TranslatorContext ctx, NDList list) {
+                    return list.singletonOrThrow().toString();
+                }
+
+                @Override
+                public Batchifier getBatchifier() {
+                    return null;
+                }
+            };
+
+            // 2️⃣ Usa Criteria para carregar modelo Hugging Face (ex: GPT2)
+            Criteria<String, String> criteria = Criteria.builder()
+                    .setTypes(String.class, String.class)
+                    .optModelUrls("djl://ai.djl.huggingface.pytorch/gpt2")
+                    .optTranslator(translator)
+                    .build();
+
+            try (Predictor<String, String> predictor = ModelZoo.loadModel(criteria).newPredictor()) {
+                String generatedText = predictor.predict(prompt);
+
+                return objectMapper.readValue(generatedText, AdjustedProduct.class);
             }
 
-        } catch (TranslateException e) {
-            System.err.println("Erro de tradução com DJL: " + e.getMessage());
-        } catch (Exception e) {
+        } catch (TranslateException | IOException | ModelException e) {
             e.printStackTrace();
         }
 
