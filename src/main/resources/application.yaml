@@ -1,0 +1,9 @@
+spring:
+  application: ia-market
+  mvc:
+    static-path-pattern: "/**"
+
+anymarket:
+  base-url: https://app.anymarket.com.br
+  token: 259029268L22449504E1790198813829C169688681382900O1.I
+
