@@ -11,7 +11,8 @@ sandbox:
     base-url: https://api.anymarket.com.br
     token: MjI0NDk1MDQu.DLgBmWACSIJ+ZnLnVrtWXkOPdgGnRKay8HfDKv/3sMulNsFPft176plbOttnqpeie/Ry+2n+nsXdeq3TidP4qA==
 
-huggingface:
-  model-url: https://api-inference.huggingface.co/models/Salesforce/codegen-6B-mono
-  token: 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
+openapi:
+  url: https://api.openai.com/v1
+  token: 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
+
 

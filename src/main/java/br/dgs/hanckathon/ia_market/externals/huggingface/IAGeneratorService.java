@@ -3,6 +3,7 @@ package br.dgs.hanckathon.ia_market.externals.huggingface;
 import br.dgs.hanckathon.ia_market.commons.model.CategoryAttributesResponse;
 import br.dgs.hanckathon.ia_market.commons.model.CategoryResponse;
 import br.dgs.hanckathon.ia_market.commons.util.JsonUtils;
+import br.dgs.hanckathon.ia_market.configs.properties.OpenAIProperties;
 import br.dgs.hanckathon.ia_market.product.model.AdjustedProduct;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,9 +16,11 @@ import java.util.Map;
 public class IAGeneratorService {
 
     private final WebClient webClient;
+    private final OpenAIProperties openAIProperties;
 
-    public IAGeneratorService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://api.openai.com/v1").build();
+    public IAGeneratorService(WebClient.Builder webClientBuilder, OpenAIProperties openAIProperties) {
+        this.openAIProperties = openAIProperties;
+        this.webClient = webClientBuilder.baseUrl(openAIProperties.getUrl()).build();
     }
 
     public AdjustedProduct adjustProduct(AdjustedProduct product,
@@ -42,7 +45,7 @@ public class IAGeneratorService {
 
             String response = webClient.post()
                     .uri("/chat/completions")
-                    .header("Authorization", "Bearer " + "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")
+                    .header("Authorization", "Bearer " + openAIProperties.getToken())
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(Map.class)

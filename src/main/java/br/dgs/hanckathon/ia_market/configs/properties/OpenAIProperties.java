@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-@ConfigurationProperties(prefix = "huggingface")
-public class HuggingFaceProperties {
-    private String modelUrl;
+@ConfigurationProperties(prefix = "openapi")
+public class OpenAIProperties {
+    private String url;
     private String token;
 }
