@@ -1,6 +1,8 @@
 package br.dgs.hanckathon.ia_market.externals.anymarket.client;
 
 
+import br.dgs.hanckathon.ia_market.commons.model.CategoryAttributesResponse;
+import br.dgs.hanckathon.ia_market.commons.model.CategoryResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.service.annotation.GetExchange;
