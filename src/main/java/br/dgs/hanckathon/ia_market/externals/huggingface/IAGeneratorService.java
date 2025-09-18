@@ -1,6 +1,7 @@
 package br.dgs.hanckathon.ia_market.externals.huggingface;
 
 import ai.djl.Model;
+import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer;
 import ai.djl.inference.Predictor;
 import ai.djl.ndarray.NDList;
 import ai.djl.translate.Batchifier;
@@ -38,16 +39,18 @@ public class IAGeneratorService {
 
                 // 3️⃣ Criar translator simples
                 Translator<String, String> translator = new Translator<>() {
+                    HuggingFaceTokenizer tokenizer = HuggingFaceTokenizer.newInstance("Salesforce/codegen-6B-mono");
+
                     @Override
                     public NDList processInput(TranslatorContext ctx, String input) {
-                        // Aqui você pode converter a string para NDArray se necessário
-                        return new NDList();
+                        long[] tokenIds = tokenizer.encode(input).getIds();
+                        return new NDList(ctx.getNDManager().create(tokenIds));
                     }
 
                     @Override
                     public String processOutput(TranslatorContext ctx, NDList list) {
-                        // Aqui você processa a saída do modelo para String
-                        return list.singletonOrThrow().toString();
+                        long[] outputIds = list.singletonOrThrow().toLongArray();
+                        return tokenizer.decode(outputIds);
                     }
 
                     @Override
