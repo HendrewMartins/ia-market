@@ -7,3 +7,7 @@ anymarket:
   base-url: https://app.anymarket.com.br
   token: 259029268L22449504E1790198813829C169688681382900O1.I
 
+huggingface:
+  model-url: https://api-inference.huggingface.co/models/gpt2
+  token: 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
+

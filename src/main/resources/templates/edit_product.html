@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Produto</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Editar Produto</h1>
+
+<form th:action="@{/adjust}" th:object="${product}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <p>Nome: <input type="text" th:field="*{fields.title}" /></p>
+    <p>Descrição: <input type="text" th:field="*{fields.CUSTOM_DESCRIPTION}" /></p>
+
+    <p>Marketplace:
+        <select th:field="*{marketPlace}">
+            <option value="MERCADO_LIVRE" th:selected="${product.marketPlace == 'MERCADO_LIVRE'}">Mercado Livre</option>
+            <option value="SHOPPE" th:selected="${product.marketPlace == 'SHOPPE'}">Shopee</option>
+        </select>
+    </p>
+
+    <button type="submit">Ajustar com IA</button>
+</form>
+
+<div th:if="${adjustedProduct != null}">
+    <h2>Produto Ajustado</h2>
+    <form th:action="@{/save}" th:object="${adjustedProduct}" method="post">
+        <p>Nome: <input type="text" th:field="*{fields.title}" /></p>
+        <p>Descrição: <input type="text" th:field="*{fields.CUSTOM_DESCRIPTION}" /></p>
+        <p>Marketplace: <input type="text" th:field="*{marketPlace}" readonly /></p>
+        <button type="submit">Salvar Produto</button>
+    </form>
+</div>
+
+<a href="/">Voltar</a>
+</body>
+</html>
