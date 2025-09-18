@@ -1,4 +1,4 @@
-package br.dgs.hanckathon.ia_market;
+package br.dgs.hanckathon.ia_market.controller;
 
 
 import br.dgs.hanckathon.ia_market.commons.model.ProductSKURequest;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class Controller {
+public class ProductTestController {
 
     private final SandboxClient sandboxClient;
 
