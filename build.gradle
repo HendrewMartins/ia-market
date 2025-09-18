@@ -21,10 +21,13 @@ java {
 }
 
 repositories {
+	mavenCentral()
 	maven {
 		url "https://oss.sonatype.org/content/repositories/snapshots/"
 	}
-	mavenCentral()
+	maven {
+		url "https://djl.ai/maven"
+	}
 }
 
 ext {
@@ -56,11 +59,11 @@ dependencies {
 
 	// Hugging Face integration
 	implementation 'ai.djl.huggingface:tokenizers:0.21.0'
-	implementation 'ai.djl.huggingface:hub:0.21.0'
+	//implementation 'ai.djl.huggingface:hub:0.21.0'
 
-	// PyTorch engine (CPU ou GPU)
-	implementation 'ai.djl.pytorch:pytorch-engine:0.21.0'
-	implementation 'ai.djl.pytorch:pytorch-native-auto:2.1.0'
+//	// PyTorch engine (CPU ou GPU)
+//	implementation 'ai.djl.pytorch:pytorch-engine:0.21.0'
+//	implementation 'ai.djl.pytorch:pytorch-native-auto:2.1.0'
 
 	// Jackson para JSON
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
