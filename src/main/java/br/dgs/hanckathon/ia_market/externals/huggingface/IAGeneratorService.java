@@ -54,7 +54,9 @@ public class IAGeneratorService {
                     .block();
 
             if (response != null && !response.isEmpty()) {
-                return JsonUtils.fromJson(response, AdjustedProduct.class);
+                AdjustedProduct adjustedProduct = JsonUtils.fromJson(response, AdjustedProduct.class);
+                adjustedProduct.setId(product.getId());
+                return adjustedProduct;
             }
 
         } catch (WebClientResponseException e) {

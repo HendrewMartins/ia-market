@@ -50,7 +50,7 @@ public class ProductController {
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable String id, Model model) {
         List<ProductSKUResponse> products = sandboxClient.getProductSKU(349464315);
-        AdjustedProduct adjustedProduct = new AdjustedProduct(products.get(0), "");
+        AdjustedProduct adjustedProduct = new AdjustedProduct(products.get(0), "MERCADO_LIVRE");
         model.addAttribute("product", adjustedProduct);
         return "edit_product";
     }
