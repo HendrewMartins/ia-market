@@ -10,13 +10,19 @@
     <tr>
         <th>ID</th>
         <th>Nome</th>
-        <th>Descrição</th>
+        <th>EAN</th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+        <th>Preço de Venda</th>
         <th>Ações</th>
     </tr>
     <tr th:each="product : ${products}">
         <td th:text="${product.id}">1</td>
-        <td th:text="${product.name}">Produto</td>
-        <td th:text="${product.description}">Descrição</td>
+        <td th:text="${product.title}">Produto</td>
+        <td th:text="${product.ean}">123456789</td>
+        <td th:text="${product.amount}">10</td>
+        <td th:text="${product.price}">0.0</td>
+        <td th:text="${product.sellPrice}">0.0</td>
         <td>
             <a th:href="@{'/edit/' + ${product.id}}">Editar</a>
         </td>
