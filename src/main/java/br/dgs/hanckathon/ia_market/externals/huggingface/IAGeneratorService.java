@@ -5,6 +5,7 @@ import ai.djl.inference.Predictor;
 import ai.djl.ndarray.NDList;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelZoo;
+import ai.djl.repository.zoo.ZooModel;
 import ai.djl.translate.Batchifier;
 import ai.djl.translate.TranslateException;
 import ai.djl.translate.Translator;
@@ -57,14 +58,14 @@ public class IAGeneratorService {
             // 2️⃣ Usa Criteria para carregar modelo Hugging Face (ex: GPT2)
             Criteria<String, String> criteria = Criteria.builder()
                     .setTypes(String.class, String.class)
-                    .optModelUrls("djl://ai.djl.huggingface.pytorch/gpt2")
+                    .optModelUrls("djl://ai.djl.huggingface/gpt2") // agora funciona
                     .optTranslator(translator)
                     .build();
 
-            try (Predictor<String, String> predictor = ModelZoo.loadModel(criteria).newPredictor()) {
-                String generatedText = predictor.predict(prompt);
-
-                return objectMapper.readValue(generatedText, AdjustedProduct.class);
+            try (ZooModel<String, String> model = ModelZoo.loadModel(criteria);
+                 Predictor<String, String> predictor = model.newPredictor()) {
+                String output = predictor.predict("Olá DJL, como vai?");
+                System.out.println(output);
             }
 
         } catch (TranslateException | IOException | ModelException e) {
