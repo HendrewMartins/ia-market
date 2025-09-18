@@ -8,7 +8,6 @@ import br.dgs.hanckathon.ia_market.externals.anymarket.client.AnymarketClient;
 import br.dgs.hanckathon.ia_market.externals.huggingface.IAGeneratorService;
 import br.dgs.hanckathon.ia_market.externals.sandbox.SandboxClient;
 import br.dgs.hanckathon.ia_market.product.model.AdjustedProduct;
-import br.dgs.hanckathon.ia_market.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-
-    private final ProductService productService;
     private final AnymarketClient anymarketClient;
     private final IAGeneratorService iaService;
     private final SandboxClient sandboxClient;
