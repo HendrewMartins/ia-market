@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +24,20 @@ public class ProductSKUResponse {
     private List<VariationDTO> variations;
     private List<AdditionalStockDTO> additionalStocks;
     private String externalId;
+
+    public ProductSKUResponse(ProductSKUResponse product) {
+        this.id = product.getId();
+        this.title = product.getTitle();
+        this.partnerId = product.getPartnerId();
+        this.ean = product.getEan();
+        this.amount = product.getAmount();
+        this.additionalTime = product.getAdditionalTime();
+        this.price = product.getPrice();
+        this.sellPrice = product.getSellPrice();
+        this.stockLocalId = product.getStockLocalId();
+        this.variations = product.getVariations();
+        this.additionalStocks = product.getAdditionalStocks();
+        this.externalId = product.getExternalId();
+    }
+
 }

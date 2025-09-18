@@ -2,10 +2,12 @@ package br.dgs.hanckathon.ia_market.product.controller;
 
 import br.dgs.hanckathon.ia_market.commons.model.CategoryAttributesResponse;
 import br.dgs.hanckathon.ia_market.commons.model.CategoryResponse;
+import br.dgs.hanckathon.ia_market.commons.model.ProductSKURequest;
+import br.dgs.hanckathon.ia_market.commons.model.ProductSKUResponse;
 import br.dgs.hanckathon.ia_market.externals.anymarket.client.AnymarketClient;
 import br.dgs.hanckathon.ia_market.externals.huggingface.IAGeneratorService;
+import br.dgs.hanckathon.ia_market.externals.sandbox.SandboxClient;
 import br.dgs.hanckathon.ia_market.product.model.AdjustedProduct;
-import br.dgs.hanckathon.ia_market.product.model.Product;
 import br.dgs.hanckathon.ia_market.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,11 +27,12 @@ public class ProductController {
     private final ProductService productService;
     private final AnymarketClient anymarketClient;
     private final IAGeneratorService iaService;
+    private final SandboxClient sandboxClient;
 
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Product> products = productService.listProducts();
+        List<ProductSKUResponse> products = sandboxClient.getProductSKU(349464315);
         model.addAttribute("products", products);
         return "index";
     }
@@ -49,8 +52,8 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable String id, Model model) {
-        Product product = new Product(id, "Produto Exemplo", "Descrição Exemplo"); // Mock
-        AdjustedProduct adjustedProduct = new AdjustedProduct(product.getId(), product.getName(), product.getDescription(), "");
+        List<ProductSKUResponse> products = sandboxClient.getProductSKU(349464315);
+        AdjustedProduct adjustedProduct = new AdjustedProduct(products.get(0), "");
         model.addAttribute("product", adjustedProduct);
         return "edit_product";
     }
@@ -58,7 +61,7 @@ public class ProductController {
 
     @PostMapping("/save")
     public String saveProduct(@ModelAttribute AdjustedProduct product) {
-        productService.saveProduct(product);
+        sandboxClient.patchProductSKU(349464315, product.getId(), new ProductSKURequest(product));
         return "redirect:/";
     }
 }
