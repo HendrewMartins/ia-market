@@ -37,7 +37,7 @@ public class ProductController {
     @PostMapping("/adjust")
     public String adjustProductWithIA(@ModelAttribute AdjustedProduct product, Model model) {
         List<CategoryResponse> categoryResponse = anymarketClient.getCategory();
-        CategoryAttributesResponse attributesResponse = anymarketClient.getCategoryAttributes();
+        List<CategoryAttributesResponse> attributesResponse = anymarketClient.getCategoryAttributes();
 
         AdjustedProduct adjusted = iaService.adjustProduct(product, categoryResponse, attributesResponse);
 
