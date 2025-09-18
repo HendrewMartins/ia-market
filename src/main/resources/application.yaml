@@ -8,6 +8,6 @@ anymarket:
   token: 259029268L22449504E1790198813829C169688681382900O1.I
 
 huggingface:
-  model-url: https://api-inference.huggingface.co/models/distilgpt2
+  model-url: https://api-inference.huggingface.co/models/Salesforce/codegen-6B-mono
   token: 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
 
